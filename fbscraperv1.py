@@ -335,7 +335,7 @@ def main():
     with sync_playwright() as pw:
         # 1. Launch persistent context (saves cookies/cache to PROFILE_DIR)
         # 2. Add --disable-blink-features to hide automation
-        """context = pw.chromium.launch_persistent_context(
+        context = pw.chromium.launch_persistent_context(
             user_data_dir=str(PROFILE_DIR),
             headless=False,
             viewport={"width": 1280, "height": 900},
@@ -344,13 +344,13 @@ def main():
                         "Chrome/124.0.0.0 Safari/537.36"),
             locale="en-GB",
             args=['--disable-blink-features=AutomationControlled']
-        )"""
+        )
         
         # Create the page first
-        #page = context.pages[0] if context.pages else context.new_page()
+        page = context.pages[0] if context.pages else context.new_page()
         
-        browser = pw.chromium.launch(headless=False)
-        context = browser.new_context(
+        #browser = pw.chromium.launch(headless=False)
+        #context = browser.new_context(
             viewport={"width": 1280, "height": 900},
             user_agent=("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                         "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -359,17 +359,17 @@ def main():
         )
 
         # Optional Stealth application to hide webdriver flags
-        # Stealth().apply(context)
+        Stealth().apply(context)
 
-        page = context.new_page()
+        #page = context.new_page()
 
         # 3. Apply Stealth patches directly to the page
         # 2. FIX FOR LINE 198:
         # Initialize the object, then explicitly apply it synchronously
-        stealth = Stealth()
-        stealth.apply_stealth_sync(page)
+        #stealth = Stealth()
+        #stealth.apply_stealth_sync(page)
 
-        # manual_login(page)
+        manual_login(page)
         # --- CONTINUE TO GROUP ---
         print(f"[*] Navigating to {GROUP_URL}...")
         page.goto(GROUP_URL, wait_until="domcontentloaded")
