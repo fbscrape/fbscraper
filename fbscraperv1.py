@@ -17,7 +17,7 @@ from playwright_stealth import Stealth
 # Optional but highly recommended for avoiding detection:
 # pip install playwright-stealth
 
-GROUP_URL = "https://www.facebook.com/groups/862069547928144"
+GROUP_URL = "https://www.facebook.com/groups/elcasbah/"
 TARGET_POSTS = 2
 
 # Directory to store browser cookies/cache so Facebook remembers you
@@ -31,7 +31,7 @@ JSON_PATH = OUT_DIR / "fb_group_v1_stealth.json"
 def manual_login(page):
         # --- MANUAL LOGIN SECTION ---
         # Go to the standard login page first
-        page.goto("https://www.facebook.com/groups/810492662491712/", wait_until="domcontentloaded")
+        page.goto("https://www.facebook.com/login/", wait_until="domcontentloaded")
         time.sleep(2)
         
         # Check if we are already logged in by looking for the email input
@@ -350,24 +350,24 @@ def main():
         page = context.pages[0] if context.pages else context.new_page()
         
         #browser = pw.chromium.launch(headless=False)
-        #context = browser.new_context(
+        """context = browser.new_context(
             viewport={"width": 1280, "height": 900},
             user_agent=("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                         "AppleWebKit/537.36 (KHTML, like Gecko) "
                         "Chrome/124.0.0.0 Safari/537.36"),
             locale="en-GB",
-        )
+        ) """
 
         # Optional Stealth application to hide webdriver flags
-        Stealth().apply(context)
+        #Stealth().apply(context)
 
         #page = context.new_page()
 
         # 3. Apply Stealth patches directly to the page
         # 2. FIX FOR LINE 198:
         # Initialize the object, then explicitly apply it synchronously
-        #stealth = Stealth()
-        #stealth.apply_stealth_sync(page)
+        stealth = Stealth()
+        stealth.apply_stealth_sync(page)
 
         manual_login(page)
         # --- CONTINUE TO GROUP ---
