@@ -1,13 +1,4 @@
-I know exactly what is happening! You are not seeing the `#` symbols because **GitHub turns `#` into big bold titles**. 
 
-When you paste text with `#` into GitHub's Markdown editor, the `#` hides itself and turns the text into a large heading. **That is exactly how it is supposed to work.**
-
-Here is a foolproof way to get this into your repository right now. 
-
-### Step 1: Copy this raw text
-Click the "Copy" button on the block below:
-
-```markdown
 <div align="center">
   
 # 🕷️ fbscraper
@@ -106,14 +97,3 @@ python main.py --url "https://www.facebook.com/TargetPage" --output "data.json" 
 ## 📄 License
 
 Distributed under the MIT License. See [`LICENSE`](LICENSE) for more information.
-```
-
-### Step 2: Put it in GitHub
-1. Go to your repository on GitHub.
-2. Click **Add file** -> **Create new file**.
-3. Name the file exactly: `README.md`
-4. Paste the text you copied into the box.
-5. **Important:** Make sure you are pasting it into the `< > Edit new file` tab, NOT the `Preview` tab.
-6. Scroll down and click the green **Commit changes** button.
-
-Once you click commit, GitHub will read the `#` symbols and automatically turn them into nice, big, bold headers for your repository!
