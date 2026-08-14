@@ -12,6 +12,8 @@ import time
 import random
 from pathlib import Path
 from playwright.sync_api import sync_playwright
+from seleniumbase import sb_cdp
+
 from playwright_stealth import Stealth
 
 # Optional but highly recommended for avoiding detection:
@@ -332,10 +334,27 @@ def extract_post_data(node):
 
 
 def main():
+    # Start a Chrome session managed by SeleniumBase
+    sb = sb_cdp.Chrome()
+
+    endpoint_url = sb.get_endpoint_url()
+
     with sync_playwright() as pw:
+        # Connect Playwright to the already-running Chrome instance
+        browser = pw.chromium.connect_over_cdp(endpoint_url)
+
+        # Reuse the existing browser context
+        context = browser.contexts[0]
+
+        # Reuse the existing page, or create one
+        page = context.pages[0] if context.pages else context.new_page()
+
+        # Normal Playwright operations
+        #page.goto("https://example.com")
+    #with sync_playwright() as pw:
         # 1. Launch persistent context (saves cookies/cache to PROFILE_DIR)
         # 2. Add --disable-blink-features to hide automation
-        context = pw.chromium.launch_persistent_context(
+        """ context = pw.chromium.launch_persistent_context(
             user_data_dir=str(PROFILE_DIR),
             headless=False,
             viewport={"width": 1280, "height": 900},
@@ -344,10 +363,10 @@ def main():
                         "Chrome/124.0.0.0 Safari/537.36"),
             locale="en-GB",
             args=['--disable-blink-features=AutomationControlled']
-        )
+        ) """
         
         # Create the page first
-        page = context.pages[0] if context.pages else context.new_page()
+        #page = context.pages[0] if context.pages else context.new_page()
         
         #browser = pw.chromium.launch(headless=False)
         """context = browser.new_context(
@@ -366,8 +385,8 @@ def main():
         # 3. Apply Stealth patches directly to the page
         # 2. FIX FOR LINE 198:
         # Initialize the object, then explicitly apply it synchronously
-        stealth = Stealth()
-        stealth.apply_stealth_sync(page)
+        #stealth = Stealth()
+        #stealth.apply_stealth_sync(page)
 
         manual_login(page)
         # --- CONTINUE TO GROUP ---
