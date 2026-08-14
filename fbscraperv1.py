@@ -212,7 +212,7 @@ def expand_elements1(page, node):
 def expand_elements2(node):
     """Aggressively click 'See more', 'comments', and 'replies' inside a node."""
     for _ in range(10):
-        node.get_by_text("See more").click()
+        node.get_by_text("See more").click(delay=100) 
 
 def extract_post_data53(node):
     """Extracts author, text, and comments from a given DOM node."""
@@ -445,7 +445,7 @@ def main():
             print(f"[+] found see more: {seemorebuttons.count()}")
             # 2. Clicking see more buttons
             for btn in seemorebuttons.all():
-                btn.click()
+                btn.click(delay=100) 
                 time.sleep(3)
                 dialog = page.locator('div[role="dialog"]')
                 
@@ -461,8 +461,8 @@ def main():
             print(f"[+] found vee more comments: {viewmorebuttons.count()}")
             # 2. Clicking see more buttons
             for btn in viewmorebuttons.all():
-                btn.click()
-                time.sleep(3)
+                btn.click(delay=100) 
+                time.sleep(random.uniform(3, 4.5))
                 dialog = page.locator('div[role="dialog"] [aria-modal="true"]')
                 
                 # For sync API, is_visible() is a standard method call
@@ -474,8 +474,8 @@ def main():
                     print(f"[+] found views: {views.count()}")
                     # 2. Clicking see more buttons
                     for view in views.all():
-                        view.click()
-                        time.sleep(3)
+                        view.click(delay=100) 
+                        time.sleep(random.uniform(3, 3.5))
                 else:
                     print("[+] No dialog opened after clicking see more")
 
